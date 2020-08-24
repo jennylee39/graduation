@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.EtcMapper">
+	<!-- 봉사, 상담 신청 -->
+
+
+	<insert id="addEtc">
+		insert into etcApply (etcBno, title, text, writer, addDate,id)
+		values(
+		(select IFNULL(max(etcBno)+1 ,1)from etcApply etcA), 
+		#{title}, 
+		#{text}, 
+		#{writer}, 
+		now(),
+		#{id}
+		)
+	</insert>
+
+	<select id="getEtcs" resultType="etc">
+		SELECT etcBno, title, writer, addDate, count,id FROM etcApply order by etcBno desc
+		LIMIT #{startList}, #{listSize}
+	</select>
+	
+	<select id="getEtcListCnt" resultType="int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			etcApply	
+	</select>
+
+	<select id="viewDetail" parameterType="int" resultType="etc">
+		select * from etcApply where etcBno=#{etcBno}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="plusCnt" parameterType="int"> <!-- 조회수 -->
+		update etcApply set count=count+1 where etcBno=#{etcBno}
+	</update>
+
+	<update id="updateEtc" parameterType="etc">
+		update etcApply set title=#{title}, text=#{text}, writer=#{writer}, 
+		addDate=now() where etcBno=#{etcBno}
+	</update>
+	
+</mapper>

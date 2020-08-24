@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.GalleryMapper">
+	<!-- 학사 신청 -->
+
+
+	<insert id="addGallery">
+		insert into gallery (bno, title, text, writer,id, orgname1,orgname2,orgname3, orgname4, path1, path2,path3,path4, addDate)
+		values(
+		(select IFNULL(max(bno)+1 ,1)from gallery galleryA), 
+		#{title}, 
+		#{text}, 
+		#{writer},
+		#{id},
+		#{orgname1},
+		#{orgname2},
+		#{orgname3},
+		#{orgname4}, 
+		#{path1},
+		#{path2},
+		#{path3},
+		#{path4}, 
+		now()
+		)
+	</insert>
+	
+	<select id="getGallerys" resultType="gallery">
+		SELECT * FROM gallery order by bno desc
+		LIMIT #{startList}, #{listSize}
+	</select>
+	
+	  <select id="getGalleryListCnt" resultType="int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			gallery	
+	</select>
+	
+	<select id="viewDetail" parameterType="int" resultType="gallery">
+		select * from gallery where bno=#{bno}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="plusCnt" parameterType="int">
+		update gallery set count=count+1 where bno=#{bno}
+	</update>
+
+	<update id="updateGallery" parameterType="gallery">
+		update gallery set title=#{title}, text=#{text}, writer=#{writer}, 
+		orgname1=#{orgname1},orgname2=#{orgname2},
+		orgname3=#{orgname3}, orgname4=#{orgname4},
+		 path1=#{path1}, path2=#{path2},
+		 path3=#{path3}, path4=#{path4},
+		addDate=now() where bno=#{bno}
+	</update>
+	
+	<delete id="deleteGallery" parameterType="int">
+		delete from gallery where bno = #{bno}
+	</delete>
+</mapper>

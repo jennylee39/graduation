@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.FreeMapper">
+	<!-- 학사 신청 -->
+
+
+	<insert id="addFree">
+		insert into free (bno, title, text, writer,id, rink1, rink2, orgname1,orgname2,orgname3, orgname4, orgname5, path1, path2,path3,path4, path5, addDate)
+		values(
+		(select IFNULL(max(bno)+1 ,1)from free freeA), 
+		#{title}, 
+		#{text}, 
+		#{writer},
+		#{id},
+		#{rink1},
+		#{rink2},
+		#{orgname1},
+		#{orgname2},
+		#{orgname3},
+		#{orgname4}, 
+		#{orgname5},
+		#{path1},
+		#{path2},
+		#{path3},
+		#{path4}, 
+		#{path5},
+		now()
+		)
+	</insert>
+	
+	<select id="getFrees" resultType="free">
+		SELECT * FROM free order by bno desc
+		LIMIT #{startList}, #{listSize}
+	</select>
+	
+	  <select id="getFreeListCnt" resultType="int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			free	
+	</select>
+	
+	<select id="viewDetail" parameterType="int" resultType="free">
+		select * from free where bno=#{bno}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="plusCnt" parameterType="int">
+		update free set count=count+1 where bno=#{bno}
+	</update>
+
+	<update id="updateFree" parameterType="free">
+		update free set title=#{title}, text=#{text}, writer=#{writer}, 
+		rink1=#{rink1}, rink2=#{rink2},
+		orgname1=#{orgname1},orgname2=#{orgname2},
+		orgname3=#{orgname3}, orgname4=#{orgname4},orgname5=#{orgname5},
+		 path1=#{path1}, path2=#{path2},
+		 path3=#{path3}, path4=#{path4},path5=#{path5},
+		addDate=now() where bno=#{bno}
+	</update>
+	
+	<delete id="deleteFree" parameterType="int">
+		delete from free where bno = #{bno}
+	</delete>
+</mapper>

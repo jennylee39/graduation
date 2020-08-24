@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.CouncilMapper">
+	<!-- 로그인 -->
+    <select id="getCouncils" resultType="council">
+        SELECT * FROM council order by id asc
+    </select>
+
+    <select id="getCouncil" parameterType="int" resultType="council">
+        SELECT id, role, name, grade FROM council where id = #{id}
+    </select>
+
+
+	<insert id="addCouncil" parameterType="council" keyProperty="id">
+		insert into council (id, role, name, grade) 
+		values (#{id}, #{role}, #{name}, #{grade})
+	</insert>
+<!-- 	<update id="updateUser" parameterType="int">
+		update user set done = 1 where id = #{id}
+	</update> -->
+	<delete id="deleteCouncil" parameterType="int">
+		delete from council where id = #{id}
+	</delete>
+
+	 <update id="updateCouncil" parameterType="council">
+    	update council set id = #{id}, role=#{role}, name=#{name}, grade=#{grade} where id = #{id}
+    </update><!-- 아이디 중복체크 -->
+	<select id="councilCheck" resultType="council">
+	select id from council where id = #{id}
+	
+	</select>
+</mapper>

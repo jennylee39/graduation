@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.AdminMapper">
+	<!-- 로그인 -->
+    <select id="getAdmins" resultType="admin">
+        SELECT * FROM user order by admin_id desc
+    </select>
+
+    <select id="getAdmin" parameterType="java.lang.Integer" resultType="admin">
+        SELECT admin_id , admin_pwd, name, email1, email2, phoneNum, address,role FROM admin where admin_id = #{admin_id}
+    </select>
+
+
+	<insert id="addAdmin"  parameterType="admin" keyProperty="admin_id">
+		insert into admin (admin_id, admin_pwd, name, email1, email2, phoneNum, address,role) values (#{admin_id}, #{admin_pwd}, #{name}, #{email1}, #{email2}, #{phoneNum}, #{address},#{role})
+	</insert>
+<!-- 	<update id="updateUser" parameterType="int">
+		update user set done = 1 where id = #{id}
+	</update> -->
+	<delete id="deleteAdmin" parameterType="int">
+		delete from admin where admin_id = #{admin_id}
+	</delete>
+	
+	<!-- 아이디 중복체크 -->
+	<select id="idCheck" resultType="admin">
+	select admin_id from admin where admin_id=#{admin_id}
+	
+	</select>
+
+</mapper>

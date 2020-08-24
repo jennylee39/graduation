@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<typeAliases>
+	<!-- 별명 부여 -->
+	<typeAlias type="kr.ac.skuniv.graduation.dto.User" alias="user"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Admin" alias="admin"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Out" alias="out"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Etc" alias="etc"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Dorm" alias="dorm"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Rule" alias="rule"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Notice" alias="notice"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.News" alias="news"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Council" alias="council"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Current" alias="current"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Gallery" alias="gallery"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Formula" alias="formula"/>
+	<typeAlias type="kr.ac.skuniv.graduation.dto.Free" alias="free"/>
+	
+</typeAliases>
+
+
+</configuration>
+

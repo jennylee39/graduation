@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.skuniv.graduation.dao.RuleMapper">
+	<!-- 로그인 -->
+    <select id="getRules" resultType="rule">
+        SELECT * FROM rule order by id asc
+    </select>
+
+    <select id="getRule" parameterType="int" resultType="rule">
+        SELECT id, content, minus, refer FROM rule where id = #{id}
+    </select>
+
+
+	<insert id="addRule" parameterType="rule" keyProperty="id">
+		insert into rule (id, content, minus, refer) 
+		values (#{id}, #{content}, #{minus}, #{refer})
+	</insert>
+<!-- 	<update id="updateUser" parameterType="int">
+		update user set done = 1 where id = #{id}
+	</update> -->
+	<delete id="deleteRule" parameterType="int">
+		delete from rule where id = #{id}
+	</delete>
+
+	 <update id="updateRule" parameterType="rule">
+    	update rule set id = #{id}, content=#{content}, minus=#{minus}, refer=#{refer} where id = #{id}
+    </update><!-- 아이디 중복체크 -->
+	<select id="ruleCheck" resultType="rule">
+	select id from rule where id = #{id}
+	
+	</select>
+</mapper>

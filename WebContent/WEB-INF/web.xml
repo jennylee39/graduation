@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>graduation</display-name>
+	<!-- context-param : application 전체 init-param : servlet 안에서 실행 -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+
+	<!-- applicationConfig로 공장세워줘 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>kr.ac.skuniv.graduation.config.ApplicationConfig</param-value>
+	</context-param>
+
+
+	<!-- factory에 service와 dao가 생성되었음을 알려주는 일. service가 생성되어야 controller가 작동됨. 
+		@Autowired 했기때문에 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+		<!-- 이걸 이용해서 공장을 만들어줘 -->
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+
+		<!-- handlermapping, viewResolver에 대한 정보가 들어있다. -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>kr.ac.skuniv.graduation.config.MvcConfig</param-value>
+		</init-param>
+
+	</servlet>
+	<servlet-mapping>
+
+		<!-- 어떤 걸 실행해도 설정해놓은 것이 실행되도록 dispatcher Servlet을 만들고, MvcConfig를 설정해서 
+			handlerMapping과 viewResolver를 쓸 수 있도록한다. -->
+		<!-- 모든 요청이 들어오면 dispatcher servlet이 수행하게 할거야 -->
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
